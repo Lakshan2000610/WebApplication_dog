@@ -1,0 +1,69 @@
+﻿
+
+table {
+    border: 1px solid #ddd;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s ease;
+}
+
+td, th {
+    text-align: left;
+}
+
+@media screen and (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+        thead tr {
+            display: none;
+        }
+
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+    }
+
+        td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 15px;
+            width: 45%;
+            font-weight: bold;
+            color: #2E7D32;
+        }
+
+        td:nth-of-type(1):before {
+            content: "Name";
+        }
+
+        td:nth-of-type(2):before {
+            content: "Email";
+        }
+
+        td:nth-of-type(3):before {
+            content: "Message";
+        }
+
+        td:nth-of-type(4):before {
+            content: "Submission Date";
+        }
+}

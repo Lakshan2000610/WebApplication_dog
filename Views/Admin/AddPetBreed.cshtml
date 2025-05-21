@@ -1,0 +1,130 @@
+@model WebApplication_dog.Models.Breed
+
+@{
+    ViewBag.Title = "Add Pet Breed";
+    Layout = "~/Views/Shared/Admin_Nav.cshtml";
+}
+
+<h2>Add Pet Breed</h2>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div style="margin-bottom: 20px; padding: 10px; background-color: @(ViewBag.Message.Contains("Success") ? "#4CAF50" : "#D32F2F"); color: white; border-radius: 5px;">
+        @ViewBag.Message
+    </div>
+}
+
+@using (Html.BeginForm("AddPetBreed", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="PetTypeId">Pet Type</label>
+        @Html.DropDownListFor(model => model.PetTypeId, (SelectList)ViewBag.PetTypes, "Select Pet Type", new { @class = "form-control", required = "required" })
+        @Html.ValidationMessageFor(model => model.PetTypeId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="Name">Breed Name</label>
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", required = "required" })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="BreedImage">Breed Image</label>
+        <input type="file" name="BreedImage" id="BreedImage" class="form-control" accept="image/*" />
+    </div>
+
+    <button type="submit" class="btn btn-success" style="background-color: #4CAF50; color: white; padding: 5px 10px; border-radius: 5px;">Add Breed</button>
+}
+
+<h3>Existing Breeds</h3>
+
+@if (ViewBag.Breeds != null && ((List<WebApplication_dog.Models.Breed>)ViewBag.Breeds).Any())
+{
+    <table class="recent-breeds">
+        <tr>
+            <th>Pet Type</th>
+            <th>Breed Name</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var breed in (List<WebApplication_dog.Models.Breed>)ViewBag.Breeds)
+        {
+            <tr>
+                <td>@(breed.PetType != null ? breed.PetType.Name : "Unknown")</td>
+                <td>@breed.Name</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(breed.ImagePath))
+                    {
+                        <img src="@breed.ImagePath" alt="@breed.Name" style="max-width: 100px;" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+                <td>
+                    <div style="display: flex; gap: 5px;">
+                        @using (Html.BeginForm("EditPetBreed", "Admin", new { id = breed.Id }, FormMethod.Get))
+                        {
+                            <input type="submit" value="Edit" style="background-color: #FFC107; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-right: 5px;" />
+                        }
+                        @using (Html.BeginForm("DeletePetBreed", "Admin", FormMethod.Post))
+                        {
+                            @Html.Hidden("id", breed.Id)
+                            <input type="submit" value="Delete" style="background-color: #D32F2F; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;" onclick="return confirm('Are you sure you want to delete this breed?');" />
+                        }
+                    </div>
+                    
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No breeds found.</p>
+}
+
+<style>
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .text-danger {
+        color: #D32F2F;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 5px;
+        overflow: hidden;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #4caf50;
+        color: white;
+    }
+
+    img {
+        max-width: 100px;
+        border-radius: 5px;
+    }
+</style>

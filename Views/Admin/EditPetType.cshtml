@@ -1,0 +1,56 @@
+@model WebApplication_dog.Models.PetType
+
+@{
+    ViewBag.Title = "Edit Pet Type";
+    Layout = "~/Views/Shared/Admin_Nav.cshtml";
+}
+
+<h2>Edit Pet Type</h2>
+
+@if (!string.IsNullOrEmpty(TempData["Message"]?.ToString()))
+{
+    <div style="margin-bottom: 20px; padding: 10px; background-color: @(TempData["Message"].ToString().Contains("Success") ? "#4CAF50" : "#D32F2F"); color: white; border-radius: 5px;">
+        @TempData["Message"]
+    </div>
+}
+
+@using (Html.BeginForm("EditPetType", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div style="margin-bottom: 20px;">
+        <label style="display: block; color: black; margin-bottom: 5px;">Pet Type Name</label>
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", style = "width: 100%; padding: 10px; border: 2px solid #8BC34A; border-radius: 10px;" })
+        @Html.ValidationMessageFor(m => m.Name, "", new { style = "color: red;" })
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <input type="submit" value="Update Pet Type" style="background-color: #4CAF50; color: white; border: none; border-radius: 15px; padding: 10px 20px;" />
+    </div>
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div style="color: red; text-align: center; margin-top: 20px;">
+        @Html.ValidationSummary(false, "Please correct the following errors:")
+    </div>
+}
+
+<style>
+    .form-control {
+        display: block;
+        width: 100%;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #555;
+        background-color: #fff;
+        border: 2px solid #8BC34A;
+        border-radius: 10px;
+        box-sizing: border-box;
+    }
+</style>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval") <!-- Ensure this section is present -->
+}

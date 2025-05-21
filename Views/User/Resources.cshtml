@@ -1,0 +1,41 @@
+@{
+    ViewBag.Title = "Resources";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="background-color: #FDF6E3; padding: 50px; font-family: 'Georgia', serif; text-align: center;">
+
+    <h2 style="color: #D84315; font-size: 28px; font-weight: bold;">Pet Care Essentials</h2>
+
+    <div style="display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap;">
+
+        <!-- Cat Tips Section -->
+        <div style="position: relative; width: 300px; background-image: url('/Content/Images/paws_bg.png'); background-size: cover; border: 3px solid #cc5333; border-radius: 15px; padding: 20px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); text-align: left;">
+            <ul style="padding-left: 15px; font-size: 16px; line-height: 1.8;">
+                <li>Cat Pet Care Tips</li>
+                <li>Cat Training Guides</li>
+                <li>Cat Health and Wellness Information</li>
+                <li>Cat Nutrition and Diet</li>
+            </ul>
+            <a href="@Url.Action("CatCare", "User")" style="display: inline-block; background-color: #a7d28d; color: black; font-weight: bold; border: 2px solid green; padding: 8px 20px; border-radius: 20px; margin-top: 15px; text-decoration: none;">Learn More</a>
+            
+            <!-- Cat Image -->
+            <img src="~/Content/Images/cat_circle.png" alt="Cat" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; position: absolute; top: -50px; left: -50px; border: 3px solid #FDF6E3;" />
+        </div>
+
+        <!-- Dog Tips Section -->
+        <div style="position: relative; width: 300px; background-image: url('/Content/Images/paws_bg.png'); background-size: cover; border: 3px solid #cc5333; border-radius: 15px; padding: 20px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); text-align: left;">
+            <ul style="padding-left: 15px; font-size: 16px; line-height: 1.8;">
+                <li>Dog Pet Care Tips</li>
+                <li>Dog Training Guides</li>
+                <li>Dog Health and Wellness Information</li>
+                <li>Dog Nutrition and Diet</li>
+            </ul>
+            <a href="@Url.Action("DogCare", "User")" style="display: inline-block; background-color: #a7d28d; color: black; font-weight: bold; border: 2px solid green; padding: 8px 20px; border-radius: 20px; margin-top: 15px; text-decoration: none;">Learn More</a>
+
+            <!-- Dog Image -->
+            <img src="~/Content/Images/dog_circle.png" alt="Dog" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; position: absolute; bottom: -50px; right: -30px; border: 3px solid #FDF6E3;" />
+        </div>
+
+    </div>
+</div>

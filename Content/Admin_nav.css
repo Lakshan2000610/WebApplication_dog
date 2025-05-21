@@ -1,0 +1,136 @@
+﻿
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    overflow-x: hidden;
+}
+
+.header {
+    background-color: #d4e7d4;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #2e7d32;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+    .header .logo img {
+        height: 40px;
+    }
+
+    .header .logout {
+        background-color: #2e7d32;
+        color: white;
+        border: none;
+        padding: 5px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+.sidebar {
+    width: 250px;
+    background-color: #55883B;
+    color: white;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 62px;
+    z-index: 900;
+}
+
+    .sidebar a {
+        display: flex;
+        align-items: center; /* Align icon and text vertically */
+        padding: 15px 20px;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+    }
+
+        .sidebar a i {
+            margin-right: 10px; /* Space between icon and text */
+            width: 20px; /* Fixed width for icon alignment */
+            text-align: center;
+        }
+
+        .sidebar a:hover {
+            background-color: #45a049;
+        }
+
+.content {
+    margin-left: 250px;
+    margin-top: 62px;
+    padding: 20px;
+    background-color: #A9DC8F;
+    min-height: calc(100vh - 62px);
+    overflow-y: auto;
+}
+
+.dashboard-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    background-color: #4caf50;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 120px;
+}
+
+.recent-adoptions table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.recent-adoptions th, .recent-adoptions td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.recent-adoptions th {
+    background-color: #4caf50;
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+
+    .content {
+        margin-left: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        padding-top: 0;
+    }
+
+    .content {
+        margin-left: 0;
+        margin-top: 62px;
+    }
+}
+
+

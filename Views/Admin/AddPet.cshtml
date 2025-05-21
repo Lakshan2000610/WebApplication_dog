@@ -1,0 +1,150 @@
+@model WebApplication_dog.Models.PetAdd
+
+@{
+    ViewBag.Title = "Admin Pet Adoption Application";
+    Layout = "~/Views/Shared/Admin_Nav.cshtml";
+}
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .form-container {
+        background-color: #c7e3a0;
+        padding: 30px;
+        max-width: 850px;
+        margin: 30px auto;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #ccc;
+    }
+
+    .form-section {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        color: #b30000;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .custom-input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #666;
+        background-color: #a4c87d;
+        font-size: 14px;
+    }
+
+    textarea.custom-input {
+        resize: vertical;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+        .form-row .form-section {
+            flex: 1;
+        }
+
+    .btn {
+        padding: 10px 25px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .btn-clear {
+        background-color: #a0522d;
+        color: white;
+        margin-right: 15px;
+    }
+
+    .btn-submit {
+        background-color: #4a772f;
+        color: white;
+    }
+</style>
+
+<div class="form-container">
+    <h2 style="text-align:center;">Pet Listing</h2>
+
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <div style="text-align: center; margin-bottom: 20px; padding: 10px; background-color: @(ViewBag.Message.Contains("Error") ? "#D32F2F" : "#4CAF50"); color: white; border-radius: 5px;">
+            @ViewBag.Message
+        </div>
+    }
+
+    @using (Html.BeginForm("AddPet", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-section">
+            <label>Pet Name</label>
+            @Html.TextBoxFor(model => model.PetName, new { @class = "custom-input", @required = "required" })
+            @Html.ValidationMessageFor(model => model.PetName, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-section">
+            <label>Image of the Pet</label>
+            <input type="file" name="PetImage" accept="image/*" class="custom-input" />
+        </div>
+
+        <div class="form-row">
+            <div class="form-section">
+                <label>Pet Type</label>
+                @Html.DropDownListFor(model => model.PetTypeId, (SelectList)ViewBag.PetTypes, "Select Pet Type", new { @class = "custom-input", @required = "required" })
+                @Html.ValidationMessageFor(model => model.PetTypeId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-section">
+                <label>Breed</label>
+                @Html.DropDownListFor(model => model.BreedId, (SelectList)ViewBag.Breeds, "Select Breed", new { @class = "custom-input", @required = "required" })
+                @Html.ValidationMessageFor(model => model.BreedId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-section">
+                <label>Age</label>
+                @Html.TextBoxFor(model => model.Age, new { type = "number", @class = "custom-input", @required = "required", @min = "0", @max = "100" })
+                @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-section">
+                <label>Location</label>
+                @Html.TextBoxFor(model => model.StreetAddress, new { @class = "custom-input", @required = "required" })
+                @Html.ValidationMessageFor(model => model.StreetAddress, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-section">
+                <label>Sex</label>
+                @Html.DropDownListFor(model => model.Sex, new SelectList(new[] { "Male", "Female" }), "Select Sex", new { @class = "custom-input", @required = "required" })
+                @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-section">
+            <label>Vaccinations</label>
+            @Html.TextAreaFor(model => model.Vaccinations, new { rows = 3, @class = "custom-input" })
+            @Html.ValidationMessageFor(model => model.Vaccinations, "", new { @class = "text-danger" })
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <input type="reset" value="Back" class="btn btn-clear" onclick="window.location.href='@Url.Action("PetListing", "Admin")'" />
+            <input type="submit" value="Save" class="btn btn-submit" />
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div style="color: red; text-align: center; margin-top: 20px;">
+            @Html.ValidationSummary(false, "Please correct the following errors:")
+        </div>
+    }
+</div>

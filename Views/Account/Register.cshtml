@@ -1,0 +1,86 @@
+﻿@model WebApplication_dog.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<!-- Main Layout -->
+<h2 style="color: #2E7D32; text-align: center; font-family: 'Georgia', serif;">Welcome!</h2>
+<div style=" display: flex;  box-sizing: border-box;">
+
+    <!-- Left Section: Registration Form -->
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 40px;">
+
+        <h3 style="color: #2E7D32; text-align: center; margin-bottom: 30px; font-family: 'Georgia', serif;">Create your account</h3>
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary("", new { @class = "text-danger", @style = "text-align:center;" })
+
+            <!-- Email -->
+            <div style="margin-bottom: 20px;">
+                @Html.TextBoxFor(m => m.Email, new
+                {
+                    @class = "form-control",
+                    placeholder = "Email",
+                    style = "background-color: #d2e3c8; border: none; border-radius: 15px; padding: 12px;"
+                })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @style = "color:red;" })
+            </div>
+
+            <!-- Password -->
+            <div style="margin-bottom: 20px;">
+                @Html.PasswordFor(m => m.Password, new
+                {
+                    @class = "form-control",
+                    placeholder = "Password",
+                    style = "background-color: #d2e3c8; border: none; border-radius: 15px; padding: 12px;"
+                })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @style = "color:red;" })
+            </div>
+
+            <!-- Confirm Password -->
+            <div style="margin-bottom: 20px;">
+                @Html.PasswordFor(m => m.ConfirmPassword, new
+                {
+                    @class = "form-control",
+                    placeholder = "Confirm Password",
+                    style = "background-color: #d2e3c8; border: none; border-radius: 15px; padding: 12px;"
+                })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @style = "color:red;" })
+            </div>
+
+            <!-- Register Button -->
+            <div style="text-align: center; margin-top: 20px;">
+                <input type="submit" value="Register" style="background-color: #789c59; color: white; border: none; border-radius: 25px; padding: 12px 40px; font-weight: bold; cursor: pointer;" />
+            </div>
+
+            <p style="text-align:center; margin-top: 20px;">
+                @Html.ActionLink("Already have an account? Log in", "Login", "Account", null, new { @style = "color: #2E7D32;" })
+            </p>
+        }
+    </div>
+
+    <!-- Right Section: Image and Branding -->
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <img src="~/Content/Images/Auth_Logo.png" alt="Pet Connections" style="max-width: 400px; height: auto;" />
+
+    </div>
+</div>
+
+<style>
+    .form-control {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #5d8a3c;
+        transition: 0.3s;
+    }
+</style>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

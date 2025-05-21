@@ -1,0 +1,45 @@
+@model WebApplication_dog.Models.AdoptionApplication
+
+@{
+    ViewBag.Title = "View Messages";
+    Layout = "~/Views/Shared/Admin_Nav.cshtml";
+}
+<div style=" padding: 40px; font-family: 'Georgia', serif; text-align: center; min-height: 100vh;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #FFF; border: 2px solid #2E7D32; padding: 20px;">
+        <h2 style="color: #2E7D32;">Adoption Application Details</h2>
+        <p style="color: #D84315;">Application for: @Model.PetName</p>
+        <hr style="border: 1px solid #2E7D32;" />
+
+        <div style="text-align: left; margin-bottom: 15px;">
+            <p><strong>Pet Type:</strong> @Model.PetType</p>
+            <p><strong>Breed:</strong> @Model.Breed</p>
+            <p><strong>Applicant Name:</strong> @Model.FirstName @Model.LastName</p>
+            <p><strong>Address:</strong> @Model.StreetAddress, @Model.City, @Model.Province, @Model.PostalCode</p>
+            <p><strong>Phone Number:</strong> @Model.PhoneNumber</p>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>Has Other Pet:</strong> @(Model.HasOtherPet ? "Yes" : "No")</p>
+            <p><strong>Discipline Method:</strong> @(string.IsNullOrEmpty(Model.DisciplineMethod) ? "N/A" : Model.DisciplineMethod)</p>
+            <p><strong>Has Veterinarian:</strong> @(Model.HasVeterinarian ? "Yes" : "No")</p>
+            @if (Model.HasVeterinarian)
+            {
+                <p><strong>Vet Clinic Name:</strong> @(string.IsNullOrEmpty(Model.ClinicName) ? "N/A" : Model.ClinicName)</p>
+                <p><strong>Vet Clinic Phone:</strong> @(string.IsNullOrEmpty(Model.ClinicPhoneNumber) ? "N/A" : Model.ClinicPhoneNumber)</p>
+            }
+            <p><strong>Status:</strong> @(Model.Status ? "Approved" : "Pending")</p>
+            <p><strong>Signature:</strong> @(string.IsNullOrEmpty(Model.Signature) ? "N/A" : Model.Signature)</p>
+        </div>
+        <div style="">
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="@Url.Action("Applications", "Admin")" style="display: inline-block; background-color: #D84315; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Back to List</a>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                @using (Html.BeginForm("UpdateApplicationStatus", "Admin", FormMethod.Post))
+                {
+                    @Html.Hidden("id", Model.ApplicationId)
+                    <input type="submit" value="@(Model.Status ? "Approve" : "Reject")" style="background-color: @(Model.Status ? "#D32F2F" : "#4CAF50"); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;" />
+                }
+            </div>
+        </div>
+
+    </div>
+</div>

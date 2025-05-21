@@ -1,0 +1,31 @@
+@model WebApplication_dog.Models.PetAdd
+
+@{
+    ViewBag.Title = "Pet Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="background: url('/Content/Images/paws_bg.png') no-repeat; padding: 50px; text-align: center; font-family: 'Georgia', serif;">
+   
+    <div>
+            <img src="@(string.IsNullOrEmpty(Model.PetImagePath) ? Url.Content("~/Content/Images/default_pet.jpg") : Url.Content(Model.PetImagePath))" alt="@Model.PetName" style="width: 300px; height: 300px; object-fit: cover; border: 4px solid #a7d28d; border-radius: 15px; margin-bottom: 20px;" />
+        </div>
+    
+    <!-- Arrow Info Box -->
+    <div style="display: inline-block; position: relative; background-color: #c9512e; padding: 30px 40px; border-radius: 30px; width: 60%; text-align: left; color: white;">
+        <h2 style="color: #2e7d32; text-align: center; margin-top: -20px; margin-bottom: 20px;">@Model.PetName</h2>
+
+        <p><b> @(Model.PetTypeId.HasValue ? ViewBag.PetTypeNames[Model.PetTypeId.Value] ?? "N/A" : "N/A") </b></p>
+        <p>@(Model.BreedId.HasValue ? ViewBag.BreedNames[Model.BreedId.Value] ?? "N/A" : "N/A")</p>
+        <p>@Model.Sex</p>
+        <p>@Model.Age month</p>
+        <p>Vaccinations up to date, spayed / neutered</p>
+
+
+        <!-- Adopt Button -->
+        <a href="@Url.Action("Adopt", "User", new { id = Model.PetId })"
+           style="position: absolute; top: 50%; right: -60px; transform: translateY(-50%); background-color: #8bc34a; padding: 12px 18px; border-radius: 8px; font-weight: bold; text-decoration: none; color: black;">
+            ADOPT ME
+        </a>
+    </div>
+</div>

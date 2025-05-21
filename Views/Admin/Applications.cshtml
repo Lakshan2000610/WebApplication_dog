@@ -1,0 +1,74 @@
+@model List<WebApplication_dog.Models.AdoptionApplication>
+
+@{
+    ViewBag.Title = "Applications";
+    Layout = "~/Views/Shared/Admin_Nav.cshtml";
+}
+
+<h2>Applications</h2>
+
+@if (!string.IsNullOrEmpty(TempData["Message"]?.ToString()))
+{
+    <div style="margin-bottom: 20px; padding: 10px; background-color: @(TempData["Message"].ToString().Contains("Success") ? "#4CAF50" : "#D32F2F"); color: white; border-radius: 5px;">
+        @TempData["Message"]
+    </div>
+}
+
+@if (Model.Any())
+{
+    <table class="recent-adoptions">
+        <tr>
+            <th>Applicant Name</th>
+            <th>Pet</th>
+            <th>Date</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var app in Model)
+        {
+            <tr>
+                <td>@(app.FirstName + " " + app.LastName)</td>
+                <td>@app.PetName</td>
+                <td>@app.ApplicationDate.ToString("dd MMM yyyy")</td>
+                <td>
+                    <div style="display: flex; gap: 5px;">
+                        @using (Html.BeginForm("ViewApplication", "Admin", new { id = app.ApplicationId }, FormMethod.Get))
+                        {
+                            <input type="submit" value="View" style="background-color: #2196F3; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-right: 5px;" />
+                        }
+                        @using (Html.BeginForm("UpdateApplicationStatus", "Admin", FormMethod.Post))
+                        {
+                            @Html.Hidden("id", app.ApplicationId) <!-- Explicitly pass the id as form data -->
+                            <input type="submit" value="@(app.Status ? "Approve" : "Reject")" style="background-color: @(app.Status ? "#D32F2F" : "#4CAF50"); color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;" />
+                        }
+                    </div>
+                    
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No applications found.</p>
+}
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #4caf50;
+        color: white;
+    }
+</style>

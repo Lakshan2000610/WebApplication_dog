@@ -1,0 +1,100 @@
+@model IEnumerable<WebApplication_dog.Models.PetAdd>
+
+@{
+    ViewBag.Title = "Pet Listing";
+    Layout = "~/Views/Shared/Admin_Nav.cshtml";
+}
+
+<h2>Pet Adoption Applications</h2>
+
+<div style="margin-bottom: 20px;">
+    <a href="@Url.Action("AddPetType", "Admin")" class="btn btn-primary" style="background-color: #2196F3; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none;">Add Pet Type</a>
+    <a href="@Url.Action("AddPetBreed", "Admin")" class="btn btn-success" style="background-color: #4CAF50; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none; margin-left: 10px;">Add Pet Breed</a>
+    <a href="@Url.Action("AddPet", "Admin")" class="btn btn-success" style="background-color: #4CAF50; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none; margin-left: 10px;">Add Pet Application</a>
+</div>
+
+<!-- Display Messages -->
+@if (TempData["ApplicationMessage"] != null)
+{
+    <div style="text-align: center; margin-bottom: 20px; padding: 10px; background-color: @(TempData["ApplicationMessage"].ToString().Contains("Error") ? "#D32F2F" : "#4CAF50"); color: white; border-radius: 5px;">
+        @TempData["ApplicationMessage"]
+    </div>
+}
+
+@if (TempData["DebugMessage"] != null)
+{
+    <div style="text-align: center; margin-bottom: 20px; padding: 10px; background-color: #FFA500; color: white; border-radius: 5px;">
+        @TempData["DebugMessage"]
+    </div>
+}
+
+<table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+        <tr style="background-color: #4CAF50; color: white;">
+            <th style="padding: 10px;">Pet Name</th>
+            <th style="padding: 10px;">Pet Type</th>
+            <th style="padding: 10px;">Breed</th>
+            <th style="padding: 10px;">Age</th>
+            
+            <th style="padding: 10px;">Image</th>
+            <th style="padding: 10px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || !Model.Any())
+        {
+            <tr><td colspan="9" style="padding: 10px; text-align: center;">No pets found.</td></tr>
+        }
+        else
+        {
+            foreach (var pet in Model)
+            {
+                <tr>
+                    <td style="padding: 10px;">@pet.PetName</td>
+                    <td style="padding: 10px;">@(pet.PetName)</td>
+                    <td style="padding: 10px;">@(pet.PetName)</td>
+                    <td style="padding: 10px;">@pet.Age</td>
+                    
+                    <td style="padding: 10px;">
+                        @if (!string.IsNullOrEmpty(pet.PetImagePath))
+                        {
+                            <img src="@pet.PetImagePath" alt="Pet Image" style="max-width: 100px;" />
+                        }
+                        else
+                        {
+                            <span>No Image</span>
+                        }
+                    </td>
+                    <td style="padding: 10px;">
+                        <div style="display: flex; gap: 5px;">
+                            @using (Html.BeginForm("EditApplication", "Admin", new { id = pet.PetId }, FormMethod.Get))
+                            {
+                                <input type="submit" value="Edit" style="background-color: #FFC107; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;" />
+                            }
+                            @using (Html.BeginForm("DeletePet", "Admin", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("id", pet.PetId)
+                                <input type="submit" value="Delete" style="background-color: #D32F2F; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;" onclick="return confirm('Are you sure you want to delete this pet?');" />
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<style>
+    table {
+        border: 1px solid #ddd;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+</style>

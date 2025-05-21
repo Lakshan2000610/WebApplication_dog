@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Admin Panel - Pet Connections</title>
+    <link href="~/Content/Admin_nav.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        .custom-nav-links {
+            list-style: none;
+            margin-right: 50px;
+            padding: 10px;
+            
+      
+
+        }
+        a:hover {
+            opacity: 0.9;
+            transform: scale(1.03);
+            transition: all 0.2s ease-in-out;
+        }
+            .custom-nav-links li a {
+                color: #000000;
+                font-weight: bold;
+                text-decoration: none;
+                font-style: italic;
+                font-size: 18px;
+            }
+
+                .custom-nav-links li a:hover {
+                    text-decoration: underline;
+                }
+
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <img src="~/Content/Images/logo.png" alt="Pet Connections Logo" />
+        </div>
+        <div class="custom-nav-links" style="border: 3px solid #33691E; border-radius: 30px;">
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div style="padding: 10px; text-align: center;">
+            <img src="~/Content/Images/admin_profile.png" alt="Admin Profile" style="width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px;" />
+            <h4>M.Roshan</h4>
+        </div>
+        <a href="@Url.Action("Index", "Admin")"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <a href="@Url.Action("PetListing", "Admin")"><i class="fas fa-paw"></i> Pet Listing</a>
+        <a href="@Url.Action("Applications", "Admin")"><i class="fas fa-file-alt"></i> Applications</a>
+        <a href="@Url.Action("ViewMessage", "Admin")"><i class="fas fa-envelope"></i> View Message</a>
+    </div>
+
+    <div class="content">
+        @RenderBody()
+    </div>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

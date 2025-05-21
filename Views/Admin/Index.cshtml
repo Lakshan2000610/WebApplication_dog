@@ -1,0 +1,33 @@
+@model WebApplication_dog.Controllers.AdminDashboardViewModel
+
+@{
+    ViewBag.Title = "Admin Dashboard";
+    Layout = "~/Views/Shared/Admin_Nav.cshtml";
+}
+
+<div class="dashboard-stats">
+    <div class="stat-box">@Model.TotalPets<br />total pets</div>
+    <div class="stat-box">@Model.AdoptedPets<br />Adopted</div>
+
+    <div class="stat-box">@Model.PendingAdoptions<br />pending Adoption</div>
+    <div class="stat-box">@Model.PetTypes<br />pet Breeds</div>
+</div>
+
+<div class="recent-adoptions">
+    <h3>Recent Adoptions</h3>
+    <table>
+        <tr>
+            <th>Pet</th>
+            <th>Adopter</th>
+            <th>Adoption date</th>
+        </tr>
+        @foreach (var adoption in Model.RecentAdoptions)
+        {
+            <tr>
+                <td>@adoption.PetName</td>
+                <td>@adoption.AdopterName</td>
+                <td>@adoption.AdoptionDate.ToString("dd MMM yyyy")</td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Pet Connections";
+}
+
+<!-- Main Content -->
+<div style="background-color: #FDF6E3; min-height: 100vh; padding: 40px 5vw; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 30px;">
+
+    <!-- Left Side Image -->
+    <div style="flex: 1 1 300px; text-align: center;">
+        <img src="~/Content/Images/pets_image.png" alt="Pet Connections" style="width: 100%; max-width: 500px; height: auto;" />
+    </div>
+
+    <!-- Right Side Text with Background -->
+    <div style="flex: 1 1 300px; position: relative; padding: 40px; background-image: url('/Content/Images/paws_bg.png'); background-size: cover; background-repeat: no-repeat; background-position: center; border-radius: 20px; text-align: center;">
+
+        <h1 style="color: #2E7D32; font-size: 2.2vw; font-weight: bold; line-height: 1.4;">
+            Every Pet deserves a<br />Loving Home,
+        </h1>
+        <h1 style="color: #B71C1C; font-size: 2.2vw; font-weight: bold;">
+            ADOPT a pet Today
+        </h1>
+        
+        
+        <a href="@Url.Action("PetListing", "User")" style="margin-top: 30px; display: inline-block; background-color: #a14528; color: white; border: 3px solid #33691E; border-radius: 30px; padding: 12px 30px; font-size: 1.2rem; font-weight: bold; text-decoration: none;">
+            Adopt Now
+        </a>
+    </div>
+</div>

@@ -1,0 +1,195 @@
+@model WebApplication_dog.Models.PetAdoptionApplicationModel
+@{
+    ViewBag.Title = "Pet Adoption Application";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Main Container -->
+<div style="background-color: #FDF6E3; padding: 40px 10px; max-width: 1000px; margin: 0 auto; border-radius: 10px;">
+
+    <!-- Message Alert -->
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <div style="text-align: center; margin-bottom: 20px; padding: 10px; background-color: @(ViewBag.Message.Contains("Error") ? "#D32F2F" : "#4CAF50"); color: white; border-radius: 5px;">
+            @ViewBag.Message
+        </div>
+    }
+
+    <!-- Header Image -->
+    <div style="text-align: center;">
+        <img src="~/Content/Images/add_application.png" style="max-width: 280px;" />
+        <h2 style="color: #D84315; font-family: Georgia; font-weight: bold;">Pet Rescue Adoption Application Form</h2>
+    </div>
+
+    @using (Html.BeginForm("SubmitApplication", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <!-- Pet Name and Type -->
+        <div class="form-section">
+            <label>Name of Pet</label>
+            @Html.TextBoxFor(m => m.PetName, new { @class = "custom-input" })
+            @Html.ValidationMessageFor(m => m.PetName, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-section">
+            <label>Pet Type</label>
+            @Html.DropDownList("PetTypeId", (SelectList)ViewBag.PetTypes, "Select Pet Type", new { @class = "custom-input" })
+            @Html.ValidationMessageFor(m => m.PetTypeId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            <label for="BreedId">Breed</label>
+            @Html.DropDownList("BreedId", (SelectList)ViewBag.Breeds, "Select Pet Type", new { @class = "custom-input" })
+
+            @Html.ValidationMessageFor(model => model.BreedId, "", new { @class = "text-danger" })
+        </div>
+
+        <h3 class="section-title">Applicant Details</h3>
+
+        <!-- Name Fields -->
+        <div class="form-row">
+            @Html.TextBoxFor(m => m.FirstName, new { placeholder = "First Name", @class = "custom-input" })
+            @Html.TextBoxFor(m => m.LastName, new { placeholder = "Last Name", @class = "custom-input" })
+        </div>
+
+        <!-- Age -->
+        <div class="form-section">
+            <label>Age</label>
+            @Html.TextBoxFor(m => m.Age, new { type = "number", @class = "custom-input" })
+        </div>
+
+
+        <div class="form-section">
+            <label for="Sex">Sex</label>
+            @Html.DropDownListFor(model => model.Sex, new SelectList(new[] { "Male", "Female", "Unknown" }), "Select Sex", new { @class = "custom-input", required = "required" })
+            @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+        </div>
+
+        
+
+        <!-- Address -->
+        <div class="form-section">
+            <label>Address</label>
+            @Html.TextBoxFor(m => m.StreetAddress, new { placeholder = "Street Address", @class = "custom-input" })
+            @Html.TextBoxFor(m => m.City, new { placeholder = "City", @class = "custom-input" })
+            @Html.TextBoxFor(m => m.State, new { placeholder = "State", @class = "custom-input" })
+            @Html.TextBoxFor(m => m.ZipCode, new { placeholder = "Zip Code", @class = "custom-input" })
+        </div>
+
+        <!-- Contact Info -->
+        <div class="form-section">
+            <label>Phone Number</label>
+            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "custom-input" })
+
+            <label>Email</label>
+            @Html.TextBoxFor(m => m.Email, new { type = "email", @class = "custom-input" })
+        </div>
+
+        <h3 class="section-title">Pet History</h3>
+        <div class="form-section">
+            <label>Do you have any pets?</label>
+            @Html.RadioButtonFor(m => m.HasPets, "Yes") <span>Yes</span>
+            @Html.RadioButtonFor(m => m.HasPets, "No") <span>No</span>
+        </div>
+        <div class="form-section">
+            <label>How many pets have you owned?</label>
+            @Html.TextBoxFor(m => m.NumberOfPetsOwned, new { type = "number", @class = "custom-input" })
+        </div>
+
+        <h3 class="section-title">Veterinary Information</h3>
+        <div class="form-section">
+            <label>Do you have a regular veterinarian?</label>
+            @Html.RadioButtonFor(m => m.HasVeterinarian, "Yes") <span>Yes</span>
+            @Html.RadioButtonFor(m => m.HasVeterinarian, "No") <span>No</span>
+        </div>
+        <div class="form-section">
+            <label>Clinic Name</label>
+            @Html.TextBoxFor(m => m.VetClinicName, new { @class = "custom-input" })
+
+            <label>Clinic Phone Number</label>
+            @Html.TextBoxFor(m => m.VetPhoneNumber, new { @class = "custom-input" })
+        </div>
+
+        <h3 class="section-title">Image Upload</h3>
+        <div class="form-section">
+            <label>Upload Pet Image</label>
+            <input type="file" name="PetImage" accept="image/*" class="custom-input" />
+        </div>
+
+        <div class="form-section">
+            <label>I confirm that all the information supplied here is correct and accurate</label>
+            @Html.TextBoxFor(m => m.Signature, new { placeholder = "Signature", @class = "custom-input" })
+        </div>
+
+        <!-- Buttons -->
+        <div style="text-align: center; margin-top: 30px;">
+            <input type="button" value="Clear" onclick="this.form.reset();" class="btn-clear" />
+            <input type="submit" value="Submit" class="btn-submit" />
+        </div>
+    }
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div style="color: red; text-align: center; margin-top: 20px;">
+            @Html.ValidationSummary(false, "Please correct the following errors:")
+        </div>
+    }
+</div>
+
+<style>
+    .form-section {
+        margin-bottom: 20px;
+    }
+
+    .form-row {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .custom-input {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #8BC34A;
+        background-color: #d2e3c8;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .section-title {
+        color: #2E7D32;
+        margin-top: 30px;
+        font-family: Georgia;
+    }
+
+    .btn-clear, .btn-submit {
+        font-weight: bold;
+        border: none;
+        border-radius: 15px;
+        padding: 10px 25px;
+        font-size: 16px;
+        margin: 0 10px;
+        cursor: pointer;
+    }
+
+    .btn-clear {
+        background-color: #d32f2f;
+        color: white;
+    }
+
+    .btn-submit {
+        background-color: #a14528;
+        color: white;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+</style>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

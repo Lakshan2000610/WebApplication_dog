@@ -51,9 +51,9 @@
             {
                 <tr>
                     <td style="padding: 10px;">@pet.PetName</td>
-                    <td style="padding: 10px;">@(pet.PetName)</td>
-                    <td style="padding: 10px;">@(pet.PetName)</td>
-                    <td style="padding: 10px;">@pet.Age</td>
+                       <td style="padding: 10px;">@(pet.PetTypeId.HasValue ? ViewBag.PetTypeNames[pet.PetTypeId.Value] ?? "N/A" : "N/A")</td>
+   <td style="padding: 10px;">@(pet.BreedId.HasValue ? ViewBag.BreedNames[pet.BreedId.Value] ?? "N/A" : "N/A")</td>
+   <td style="padding: 10px;">@(pet.Age.HasValue ? pet.Age.Value.ToString() : "N/A")</td>
                     
                     <td style="padding: 10px;">
                         @if (!string.IsNullOrEmpty(pet.PetImagePath))

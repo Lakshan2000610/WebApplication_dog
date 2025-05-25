@@ -50,14 +50,15 @@ namespace WebApplication_dog.Controllers
 
         public ActionResult PetListing()
         {
-            
-           
-              
-                var petAdds = _dbContext.PetAdds.ToList();
+            var petAdds = _dbContext.PetAdds.ToList();
 
-                return View(petAdds );
-           
-           
+            // Populate ViewBag with PetType and Breed names
+            var petTypes = _dbContext.PetTypes.ToDictionary(pt => pt.Id, pt => pt.Name);
+            var breeds = _dbContext.Breeds.ToDictionary(b => b.Id, b => b.Name);
+            ViewBag.PetTypeNames = petTypes;
+            ViewBag.BreedNames = breeds;
+
+            return View(petAdds);
         }
 
         // GET: /Admin/AddPetType
